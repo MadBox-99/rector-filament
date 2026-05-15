@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cegem360\RectorFilament\Set;
+namespace Madbox99\RectorFilament\Set;
 
 final class FilamentSetList
 {

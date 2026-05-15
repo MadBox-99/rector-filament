@@ -1,5 +1,5 @@
 {
-    "name": "cegem360/rector-filament",
+    "name": "madbox-99/rector-filament",
     "description": "Rector rules for Filament codebases.",
     "type": "rector-extension",
     "license": "MIT",
@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Cegem360\\RectorFilament\\": "src/"
+            "Madbox99\\RectorFilament\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cegem360\\RectorFilament\\Tests\\": "tests/"
+            "Madbox99\\RectorFilament\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

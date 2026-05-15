@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cegem360\RectorFilament\Rector;
+namespace Madbox99\RectorFilament\Rector;
 
 use Filament\Support\Icons\Heroicon;
 use PhpParser\Node;

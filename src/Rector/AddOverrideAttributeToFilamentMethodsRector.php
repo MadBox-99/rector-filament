@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cegem360\RectorFilament\Rector;
+namespace Madbox99\RectorFilament\Rector;
 
 use Override;
 use PhpParser\Node;
