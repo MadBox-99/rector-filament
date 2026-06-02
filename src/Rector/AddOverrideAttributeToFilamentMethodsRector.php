@@ -10,6 +10,9 @@ use PhpParser\Node\Attribute;
 use PhpParser\Node\AttributeGroup;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\ClassMethod;
+use PHPStan\Analyser\Scope;
+use PHPStan\Reflection\ClassReflection;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
@@ -86,11 +89,49 @@ CODE
             return null;
         }
 
+        if (! $this->overridesParentOrInterface($node, $methodName)) {
+            return null;
+        }
+
         $node->attrGroups[] = new AttributeGroup([
             new Attribute(new FullyQualified(Override::class)),
         ]);
 
         return $node;
+    }
+
+    /**
+     * Only a method declared by a parent class or an implemented interface is a valid
+     * #[\Override] target. A method provided solely by a trait used on the class itself
+     * (e.g. table() from InteractsWithTable, form() from InteractsWithSchemas) is not —
+     * PHP throws a fatal error when #[\Override] is placed on such a method.
+     */
+    private function overridesParentOrInterface(ClassMethod $node, string $methodName): bool
+    {
+        $scope = $node->getAttribute(AttributeKey::SCOPE);
+
+        if (! $scope instanceof Scope) {
+            return false;
+        }
+
+        $classReflection = $scope->getClassReflection();
+
+        if (! $classReflection instanceof ClassReflection) {
+            return false;
+        }
+
+        $ancestors = [
+            ...$classReflection->getParents(),
+            ...$classReflection->getInterfaces(),
+        ];
+
+        foreach ($ancestors as $ancestor) {
+            if ($ancestor->hasNativeMethod($methodName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function hasOverrideAttribute(ClassMethod $node): bool
