@@ -1,5 +1,5 @@
 {
-    "name": "madbox-99/rector-filament",
+    "name": "cegem360/rector-filament",
     "description": "Rector rules for Filament codebases.",
     "type": "rector-extension",
     "license": "MIT",
