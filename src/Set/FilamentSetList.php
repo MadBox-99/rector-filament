@@ -7,4 +7,6 @@ namespace Madbox99\RectorFilament\Set;
 final class FilamentSetList
 {
     public const FILAMENT_CODE_QUALITY = __DIR__.'/../../config/sets/filament-code-quality.php';
+
+    public const FILAMENT_TESTS = __DIR__.'/../../config/sets/filament-tests.php';
 }
