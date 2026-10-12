@@ -1,0 +1,9 @@
+{
+    "name": "rector-filament",
+    "description": "Közös Rector-standard a Laravel/Filament projektekhez: rector.php minta, composer-scriptek és ismert Rector-buktatók.",
+    "author": {
+        "name": "Cegem360"
+    },
+    "homepage": "https://github.com/MadBox-99/rector-filament",
+    "repository": "https://github.com/MadBox-99/rector-filament"
+}

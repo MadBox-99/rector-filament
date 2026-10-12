@@ -1,0 +1,14 @@
+{
+    "name": "rector-filament",
+    "description": "Claude Code pluginek a madbox-99/rector-filament csomaghoz",
+    "owner": {
+        "name": "Cegem360"
+    },
+    "plugins": [
+        {
+            "name": "rector-filament",
+            "source": "./plugins/rector-filament",
+            "description": "Közös Rector-standard a Laravel/Filament projektekhez"
+        }
+    ]
+}
