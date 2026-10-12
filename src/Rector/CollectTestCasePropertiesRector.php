@@ -187,12 +187,16 @@ CODE,
     }
 
     /**
+     * Properties that a class-based test declares itself are left out: lifting them
+     * onto the base test case would clash with the subclass's own declaration.
+     *
      * @return array<string, array<int, Node>>
      */
     private function collectThisAssignments(): array
     {
         $nodeFinder = new NodeFinder();
         $assignmentsByProperty = [];
+        $declaredPropertyNames = [];
 
         foreach ($this->resolveScanFiles() as $filePath) {
             $stmts = $this->parseFileWithResolvedNames($filePath);
@@ -209,9 +213,20 @@ CODE,
 
                 $assignmentsByProperty[$propertyName][] = $assign->expr;
             }
+
+            /** @var Class_[] $classes */
+            $classes = $nodeFinder->findInstanceOf($stmts, Class_::class);
+
+            foreach ($classes as $class) {
+                if ($class->namespacedName?->toString() === $this->testCaseClass) {
+                    continue;
+                }
+
+                array_push($declaredPropertyNames, ...$this->resolveExistingPropertyNames($class));
+            }
         }
 
-        return $assignmentsByProperty;
+        return array_diff_key($assignmentsByProperty, array_flip($declaredPropertyNames));
     }
 
     private function matchThisPropertyName(Assign $assign): ?string
