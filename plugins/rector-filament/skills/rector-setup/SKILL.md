@@ -81,7 +81,8 @@ A `fix` sorrendje: **előbb rector, utána pint** (fordítva a rector formázatl
 
 1. Töröld a `LARAVEL_APP` által már tartalmazott és az elavult `LaravelSetList::` sorokat; ha a `LaravelSetList` már nincs használva, az importját is.
 2. Töröld a `withPreparedSets`-szel duplikált `SetList::` sorokat; ha a `SetList` már nincs használva, az importját is.
-3. `composer fix`, majd `composer test` (vagy a teljes tesztkészlet). Push előtt a globális pre-push hook (`~/.config/git/hooks/pre-push`) úgyis lefuttatja.
+3. Ha `privatization: true`, add hozzá a `PrivatizeFinalClassMethodRector` skipet; a `withSetProviders` sort töröld (a `withComposerBased(laravel: true)` kell helyette); a `fix` scriptben a rector a pint előtt fusson.
+4. `composer fix`, majd `composer test` (vagy a teljes tesztkészlet). Push előtt a globális pre-push hook (`~/.config/git/hooks/pre-push`) úgyis lefuttatja.
 
 ## Ismert Rector-buktatók (fix után ellenőrizd)
 
@@ -89,4 +90,7 @@ A `fix` sorrendje: **előbb rector, utána pint** (fordítva a rector formázatl
 - `StringToClassConstantRector` (Laravel 5-ös szint-set): `view('auth.login')` → `view(Login::class)` → skip a FortifyServiceProvider-re.
 - Típusdeklaráló szabály: `Http::assertSent(function ($r)` → `array $r`; a helyes típus `Illuminate\Http\Client\Request`.
 - `TernaryToNullsafeCoalesceRector`: a PHPStan „nullsafe.neverNull” hibát adhat → skip az érintett fájlra.
+- `EnvVariableToEnvHelperRector` / `ServerVariableToRequestFacadeRector` (a `LARAVEL_CODE_QUALITY` része, így a `LARAVEL_APP`-é is): a `$_ENV`/`$_SERVER`-t `Env::get()`/`Request::server()`-re cseréli, `unset()`-ben is (fatális hiba), és tesztben a nyers szuperglobálist kell állítani → skip a `tests/` mappára.
+- `AddHasFactoryToModelsRector`-t ne kapcsold be: factory nélküli modellekre is `HasFactory`-t tesz.
+- Ha a `rector.php` a `.gitignore`-ban van, a módosítás csak helyben él — kérdezd meg, maradjon-e így.
 - Több projekt párhuzamos fixelésénél munkánként külön `TMPDIR`, különben a Rector-cache ütközik.
