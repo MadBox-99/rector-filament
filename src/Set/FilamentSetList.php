@@ -13,7 +13,7 @@ final class FilamentSetList
     /**
      * Laravel code quality, collection, type declaration, if-helper,
      * Eloquent magic-method-to-query-builder, array-access-to-method-call,
-     * container-string-to-FQN, facade-alias and factory sets
+     * container-string-to-FQN and facade-alias sets, the factory @extends rule
      * together with both Filament sets.
      */
     public const LARAVEL_APP = __DIR__.'/../../config/sets/laravel-app.php';
