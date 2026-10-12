@@ -11,7 +11,8 @@ final class FilamentSetList
     public const FILAMENT_TESTS = __DIR__.'/../../config/sets/filament-tests.php';
 
     /**
-     * Laravel code quality, collection, type declaration and if-helper sets
+     * Laravel code quality, collection, type declaration, if-helper and
+     * Eloquent magic-method-to-query-builder sets
      * together with both Filament sets.
      */
     public const LARAVEL_APP = __DIR__.'/../../config/sets/laravel-app.php';

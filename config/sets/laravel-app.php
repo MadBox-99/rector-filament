@@ -11,6 +11,7 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_COLLECTION,
         LaravelSetList::LARAVEL_TYPE_DECLARATIONS,
         LaravelSetList::LARAVEL_IF_HELPERS,
+        LaravelSetList::LARAVEL_ELOQUENT_MAGIC_METHOD_TO_QUERY_BUILDER,
         __DIR__.'/filament-code-quality.php',
         __DIR__.'/filament-tests.php',
     ]);
